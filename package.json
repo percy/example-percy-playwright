@@ -4,7 +4,7 @@
     "test": "percy exec -- playwright test --reporter=dot"
   },
   "dependencies": {
-    "todomvc-app-css": "^2.3.0"
+    "todomvc-app-css": "^2.4.3"
   },
   "devDependencies": {
     "@percy/cli": "1.0.5",
