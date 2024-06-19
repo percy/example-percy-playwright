@@ -2,8 +2,8 @@
   "private": true,
   "scripts": {
     "test-web": "percy exec -- playwright test todomvc_snapshot.spec.js --reporter=dot",
-    "test-automate-before": "percy exec -- playwright test todomvc_screenshot_before.spec.js --reporter=dot",
-    "test-automate-after": "percy exec -- playwright test todomvc_screenshot_after.spec.js --reporter=dot"
+    "test-automate-before": "percy exec -- playwright test bstackdemo_screenshot_before.spec.js --reporter=dot",
+    "test-automate-after": "percy exec -- playwright test bstackdemo_screenshot_after.spec.js --reporter=dot"
   },
   "dependencies": {
     "todomvc-app-css": "^2.3.0"
