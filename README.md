@@ -137,6 +137,8 @@ The tutorial also assumes you have [Node 14+ with
 npm](https://nodejs.org/en/download/) and
 [git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) installed.
 
+Minimum required `@percy/cli` version is `1.28.8-beta.3` for this to work correctly. If you already have `@percy/cli` or `@percy/webdriver-utils` installed please update it to latest or minium required version.
+
 
 ### Step 1
 
@@ -147,6 +149,14 @@ $ git clone git@github.com:percy/example-percy-playwright.git
 $ cd example-percy-playwright
 $ npm install
 ```
+
+This tutorial specifically uses Browserstack Automate to run playwright test.
+
+For automate you will need credentials so refer to following instructions to get the same
+
+1. You will need a BrowserStack `username` and `access key`. To obtain your access credentials, [sign up](https://www.browserstack.com/users/sign_up?utm_campaign=Search-Brand-India&utm_source=google&utm_medium=cpc&utm_content=609922405128&utm_term=browserstack) for a free trial or [purchase a plan](https://www.browserstack.com/pricing).
+
+2. Please get your `username` and `access key` from [profile](https://www.browserstack.com/accounts/profile) page.
 
 ### Step 2
 
