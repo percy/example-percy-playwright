@@ -99,7 +99,7 @@ $ git commit -am "Emphasize 'Clear completed' button"
 Run the tests with snapshots again:
 
 ``` shell
-$ npm run test
+$ npm run test-web
 ```
 
 This will run the tests again and take new snapshots of our modified application. The new snapshots
