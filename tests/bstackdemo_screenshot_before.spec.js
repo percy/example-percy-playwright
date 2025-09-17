@@ -29,9 +29,7 @@ test.describe("PercyOnAutomate demo test", () => {
       wsEndpoint: WS_URL,
     });
 
-    const context = await browser.newContext({
-      ignoreHTTPSErrors: true,
-    });
+    const context = await browser.newContext();
 
     page = await context.newPage();
   });
@@ -57,20 +55,16 @@ test.describe("PercyOnAutomate demo test", () => {
 
     // locating product on webpage and getting name of the product
     // Wait until element is located using XPath
-    const element = await page.waitForSelector('\/\/*[@id="1"]/p');
-    // Get text content of the element
-    const productText = await element.textContent();
+    const productText = await page.locator('\/\/*[@id="1"]/p').textContent();
 
     await page.click('\/\/*[@id="1"]/div[4]');
     // waiting until the Cart pane has been displayed on the webpage
     await page.waitForSelector(".float-cart__content");
 
     // locating product in cart and getting name of the product in cart
-    const productCartTextElement = await page.$(
+    const productCartText = await page.locator(
       'xpath=\/\/*[@id="__next"]/div/div/div[2]/div[2]/div[2]/div/div[3]/p[1]'
-    );
-
-    const productCartText = await productCartTextElement.textContent();
+    ).textContent();
     // [percy note: important step]
     // Percy Screenshot 2
     // take percy_screenshot using the following command
