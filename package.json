@@ -5,14 +5,12 @@
     "test-automate-before": "percy exec -- playwright test bstackdemo_screenshot_before.spec.js --reporter=dot",
     "test-automate-after": "percy exec -- playwright test bstackdemo_screenshot_after.spec.js --reporter=dot"
   },
-  "dependencies": {
-    "todomvc-app-css": "^2.3.0"
-  },
   "devDependencies": {
     "@percy/cli": "^1.31.2",
-    "@percy/playwright": "^1.0.8",
-    "@playwright/test": "1.53",
-    "playwright": "1.53",
-    "serve-handler": "^6.1.3"
+    "@percy/playwright": "^1.0.9",
+    "@playwright/test": "^1.56.0",
+    "playwright": "^1.56.0",
+    "serve-handler": "^6.1.6",
+    "todomvc-app-css": "^2.4.3"
   }
 }
