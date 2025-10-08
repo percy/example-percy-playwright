@@ -27,6 +27,8 @@ $ cd example-percy-playwright
 $ npm install
 ```
 
+
+
 The example app and its tests will now be ready to go. You can explore the app
 by opening the
 [`index.html`](https://github.com/percy/example-percy-playwright/blob/master/index.html)
