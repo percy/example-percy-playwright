@@ -7,9 +7,9 @@
   },
   "devDependencies": {
     "@percy/cli": "^1.31.2",
-    "@percy/playwright": "^1.0.9",
-    "@playwright/test": "^1.56.0",
-    "playwright": "^1.56.0",
+  "@percy/playwright": "^1.0.9",
+  "@playwright/test": "1.53.2",
+  "playwright": "1.53.2",
     "serve-handler": "^6.1.6",
     "todomvc-app-css": "^2.4.3"
   }
