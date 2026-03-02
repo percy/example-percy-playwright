@@ -1,0 +1,10 @@
+- name: Screenshot_2345
+  url: https://hemanthh276.github.io/visual-testing-boxes/
+  waitForTimeout: 30000
+
+
+- name: random2456
+  url: https://www.whatthefuckshouldimakefordinner.com/
+  labels: "pricing"
+  waitForTimeout: 30000
+

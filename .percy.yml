@@ -1,0 +1,17 @@
+version: 2
+snapshot:
+  widths: [1280, 1920]
+  # widths: [1280]
+  # widths: [375]
+  # widths: [800, 1024, 1920, 1280]
+  minHeight: 1024
+  percyCSS: ""
+  enableJavaScript: true
+  cliEnableJavaScript: true
+  disableShadowDOM: false
+discovery:
+  # allowedHostnames: []
+  # disallowedHostnames: []
+  networkIdleTimeout: 750
+  captureMockedServiceWorker: false
+  retry: true
