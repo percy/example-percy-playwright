@@ -1,0 +1,87 @@
+# PER-8195 Phase 1 — Playwright matrix-row mapping (STUB).
+# Source of truth for the README table + aggregated docs-site grid.
+# Test code in tests/todomvc_advanced.spec.js — TO BE WRITTEN.
+
+sdk: playwright
+package: '@percy/playwright'
+language: javascript
+sdk_min_version: '1.1.0'
+cli_min_version: '1.28.8'  # sync option + waitForReady require >= 1.28.8
+
+rows:
+  - id: widths
+    state: planned
+    test: 'TodoMVC Advanced > exercises widths'
+  - id: percy_css
+    state: planned
+    test: 'TodoMVC Advanced > exercises percyCSS'
+  - id: min_height
+    state: planned
+    test: 'TodoMVC Advanced > exercises minHeight'
+  - id: enable_javascript
+    state: planned
+    test: 'TodoMVC Advanced > exercises enableJavaScript'
+  - id: scope
+    state: planned
+    test: 'TodoMVC Advanced > exercises scope'
+  - id: discovery
+    state: planned
+    test: 'TodoMVC Advanced > exercises discovery options'
+  - id: dom_transformation
+    state: planned
+    test: 'TodoMVC Advanced > exercises domTransformation'
+  - id: responsive_snapshot_capture
+    state: planned
+    test: 'TodoMVC Advanced > exercises responsiveSnapshotCapture'
+  - id: labels
+    state: planned
+    test: 'TodoMVC Advanced > exercises labels'
+  - id: test_case
+    state: planned
+    test: 'TodoMVC Advanced > exercises testCase'
+  - id: device_pixel_ratio
+    state: planned
+    test: 'TodoMVC Advanced > exercises devicePixelRatio'
+  - id: regions
+    state: planned
+    test: 'TodoMVC Advanced > exercises regions (via createRegion helper)'
+  - id: readiness_preset
+    state: planned
+    test: 'TodoMVC Advanced > exercises readiness preset'
+  - id: browsers
+    state: planned
+    test: 'TodoMVC Advanced > exercises browsers override'
+  - id: disable_shadow_dom
+    state: planned
+  - id: enable_layout
+    state: planned
+  - id: reshuffle_invalid_tags
+    state: planned
+  - id: scope_options_scroll
+    state: planned
+  - id: sync
+    state: planned
+  - id: create_region_helper
+    state: planned
+    test: 'TodoMVC Advanced > exercises regions (via createRegion helper)'
+
+  # Playwright-specific.
+  - id: cross_origin_iframe_handling
+    state: covered
+    test: 'automatic via @percy/playwright >= 1.1.0'
+    notes: 'SDK auto-detects cross-origin iframes, parallel frame processing.'
+  - id: cookie_capture_via_context
+    state: covered
+    test: 'automatic via @percy/playwright (page.context().cookies())'
+
+  - id: env_percy_server_address
+    state: planned
+    test: 'CI: advanced job sets PERCY_SERVER_ADDRESS via env'
+  - id: percy_yml_global_config
+    state: planned
+    test: 'global config consumed via .percy.yml'
+  - id: environment_info_reporting
+    state: covered
+    test: 'automatic via @percy/playwright client info'
+
+# Pre-existing basic-example coverage (todomvc_snapshot.spec.js): widths exercised on 2 of 3 snapshots. Other options unexercised; advanced/ will cover.
