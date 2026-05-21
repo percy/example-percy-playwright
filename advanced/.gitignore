@@ -1,0 +1,5 @@
+node_modules/
+advanced-requests.json
+playwright-report/
+test-results/
+*.log
