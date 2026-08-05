@@ -242,3 +242,44 @@ On completion of this script, this build would get compared to the previous buil
 ### Finished! 😀
 
 From here, you can try making your own changes to the website and functional tests, if you like. If you do, re-run the tests and you'll see any visual changes reflected in Percy.
+## Percy drop-in for `toHaveScreenshot()` (beta)
+
+If your suite already uses Playwright's built-in visual assertions, the drop-in routes them
+through Percy — **one config line, no test rewrites**. See
+[`playwright.dropin.config.js`](playwright.dropin.config.js) and
+[`tests/dropin/todomvc_tohavescreenshot.spec.js`](tests/dropin/todomvc_tohavescreenshot.spec.js):
+the spec imports nothing from Percy, only `@playwright/test`.
+
+```js
+// playwright.dropin.config.js
+require('@percy/playwright/dropin');
+```
+
+Run it with a Percy **Web** project token (App and Automate tokens work too):
+
+```shell
+$ export PERCY_TOKEN=<your web project token>   # use the project's FULL ACCESS token for the first run
+$ npm run test-dropin
+```
+
+Your suite passes as usual; the visual verdict moves to Percy's review dashboard.
+
+**First-run baseline seeding:** if the repo has Playwright's committed baseline screenshots
+(`*-snapshots` directories) and the Percy project is empty, `percy exec` uploads them as an
+auto-approved build #1 first — so your very first run shows real diffs instead of "new"
+snapshots. To try it here:
+
+```shell
+$ playwright test --config=playwright.dropin.config.js --update-snapshots
+$ git add tests/dropin && git commit -m "playwright baselines"
+$ npm run test-dropin
+```
+
+The first run is best done with the project's **full access token** — the default write-only
+token can't read build status, so Percy can't hold the run until the baseline finishes
+(the CLI prints a warning explaining exactly this). To deliberately re-baseline an established
+project from committed screenshots: `npx percy playwright:setup-baseline`.
+
+Requires `@percy/cli >= 1.32.6-beta.1`, `@percy/playwright >= 1.1.2-beta.0`, and
+`@playwright/test` 1.60–1.61 (this example pins 1.61.1). While the feature is in beta, install
+the pair with `npm i -D @percy/cli@beta @percy/playwright@beta --legacy-peer-deps`.
