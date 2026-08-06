@@ -8,16 +8,11 @@
     "test-dropin-automate": "percy exec -- playwright test --config=playwright.dropin.automate.config.js --reporter=dot"
   },
   "devDependencies": {
-    "@percy/cli": "1.32.6-beta.3",
-    "@percy/playwright": "1.1.2-beta.0",
+    "@percy/cli": "1.32.6",
+    "@percy/playwright": "1.1.2",
     "@playwright/test": "1.61.1",
     "playwright": "1.61.1",
     "serve-handler": "^6.1.6",
     "todomvc-app-css": "^2.4.3"
-  },
-  "overrides": {
-    "@percy/playwright": {
-      "@percy/cli": "$@percy/cli"
-    }
   }
 }

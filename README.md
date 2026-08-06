@@ -203,11 +203,10 @@ browser fails each assertion with a pointer to run on BrowserStack.
 
 ### Versions
 
-This example pins `@percy/cli@1.32.6-beta.3`, `@percy/playwright@1.1.2-beta.0` (exact, per this
-repo's `save-exact` npmrc) and `@playwright/test@1.61.1`. While the Percy packages are in beta,
-`package.json` carries an npm `overrides` entry so a plain `npm install` resolves — the SDK's
-`@percy/cli >= 1.32.3` peer range doesn't accept prerelease versions (npm semver rule); the
-override — and this note — go away at GA.
+This example pins `@percy/cli@1.32.6`, `@percy/playwright@1.1.2` (exact, per this repo's
+`save-exact` npmrc) and `@playwright/test@1.61.1`. The drop-in requires `@percy/cli >= 1.32.6`
+and `@percy/playwright >= 1.1.2`; `@playwright/test` 1.60 or later (use 1.61 for Percy on
+Automate — 1.62 is not yet supported by BrowserStack's Playwright endpoint).
 
 ## Playwright with Automate Tutorial
 
