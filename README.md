@@ -166,14 +166,19 @@ so a clean clone passes without any committed `*-snapshots` directories.
 
 **First-run baseline seeding:** if the repo *does* have Playwright's committed baseline
 screenshots and the Percy project is empty, `percy exec` uploads them as an auto-approved
-build #1 first — so your very first run shows real diffs instead of "new" snapshots. To try it
-here:
+build #1 first — so your very first run shows real diffs instead of "new" snapshots. In your
+own project (where the drop-in line lives in your regular `playwright.config.js`) that's:
 
 ```shell
-$ npx playwright test --config=playwright.dropin.config.js --update-snapshots
-$ git add tests/dropin && git commit -m "playwright baselines"
-$ npm run test-dropin
+$ npx playwright test --update-snapshots
+$ git add . && git commit -m "playwright baselines"
+$ npx percy exec -- npx playwright test
 ```
+
+> Note: baseline discovery reads Playwright's **default** config. This example keeps its
+> drop-in config under a custom filename (`playwright.dropin.config.js`) so it can coexist
+> with the repo's other examples — which means the auto-seed and `playwright:setup-baseline`
+> walkthroughs don't apply to this repo itself, only to standard single-config projects.
 
 The first run is best done with the project's **full access token** — the default write-only
 token can't read build status, so Percy can't hold the run until the baseline finishes
