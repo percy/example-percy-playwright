@@ -13,7 +13,7 @@ app, forked at commit
 | Example | What it shows | Run command |
 |---|---|---|
 | `./` (basic, at repo root) | Minimum viable integration: a `percySnapshot(page, name)` call per test. Start here. | `npm run test-web` |
-| `playwright.dropin.config.js` + [`./tests/dropin/`](./tests/dropin) | **Drop-in for `toHaveScreenshot()` (beta):** plain Playwright visual assertions routed through Percy — one config line, zero Percy imports in the spec. | `npm run test-dropin` |
+| `playwright.config.js` + [`./tests/dropin/`](./tests/dropin) | **Drop-in for `toHaveScreenshot()` (beta):** plain Playwright visual assertions routed through Percy — one config line, zero Percy imports in the spec. | `npm run test-dropin` |
 | `playwright.dropin.automate.config.js` + [`./tests/dropin-automate/`](./tests/dropin-automate) | The same drop-in on a **Percy on Automate** project — captures happen on a real BrowserStack browser through the session. | `npm run test-dropin-automate` |
 | [`./advanced/`](./advanced) | Full applicable Percy SDK feature surface: widths, percyCSS, regions, readiness, discovery, domTransformation, etc. See [`advanced/README.md`](./advanced/README.md) for the matrix-row coverage table. | `cd advanced && npm install && npx playwright install --with-deps chromium && npm run test:advanced` |
 
@@ -143,12 +143,12 @@ the tests  and you'll see any visual changes reflected in Percy.
 
 If your suite already uses Playwright's built-in visual assertions, the drop-in routes them
 through Percy — **one config line, no test rewrites**. See
-[`playwright.dropin.config.js`](playwright.dropin.config.js) and
+[`playwright.config.js`](playwright.config.js) (the repo's default Playwright config) and
 [`tests/dropin/todomvc_tohavescreenshot.spec.js`](tests/dropin/todomvc_tohavescreenshot.spec.js):
 the spec imports nothing from Percy, only `@playwright/test`.
 
 ```js
-// playwright.dropin.config.js
+// playwright.config.js
 require('@percy/playwright/dropin');
 ```
 
@@ -164,21 +164,20 @@ review dashboard (there's nothing to compare against yet); approve the build onc
 runs diff against it. The drop-in also suppresses Playwright's native missing-baseline failure,
 so a clean clone passes without any committed `*-snapshots` directories.
 
-**First-run baseline seeding:** if the repo *does* have Playwright's committed baseline
-screenshots and the Percy project is empty, `percy exec` uploads them as an auto-approved
-build #1 first — so your very first run shows real diffs instead of "new" snapshots. In your
-own project (where the drop-in line lives in your regular `playwright.config.js`) that's:
+**First-run baseline seeding:** if the repo has Playwright's committed baseline screenshots
+and the Percy project is empty, `percy exec` uploads them as an auto-approved build #1 first —
+so your very first run shows real diffs instead of "new" snapshots. To try it here:
 
 ```shell
-$ npx playwright test --update-snapshots
-$ git add . && git commit -m "playwright baselines"
-$ npx percy exec -- npx playwright test
+$ npx playwright test tests/dropin/ --update-snapshots
+$ git add tests/dropin && git commit -m "playwright baselines"
+$ npm run test-dropin
 ```
 
-> Note: baseline discovery reads Playwright's **default** config. This example keeps its
-> drop-in config under a custom filename (`playwright.dropin.config.js`) so it can coexist
-> with the repo's other examples — which means the auto-seed and `playwright:setup-baseline`
-> walkthroughs don't apply to this repo itself, only to standard single-config projects.
+> Note: baseline discovery reads Playwright's **default** config — which is why the drop-in
+> lives in this repo's `playwright.config.js` rather than a custom `--config` file. If your
+> project loads Playwright config from a non-default path, first-run seeding and
+> `playwright:setup-baseline` can't map your screenshots.
 
 The first run is best done with the project's **full access token** — the default write-only
 token can't read build status, so Percy can't hold the run until the baseline finishes
