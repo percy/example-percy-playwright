@@ -203,7 +203,7 @@ browser fails each assertion with a pointer to run on BrowserStack.
 
 ### Versions
 
-This example pins `@percy/cli@1.32.6-beta.2`, `@percy/playwright@1.1.2-beta.0` (exact, per this
+This example pins `@percy/cli@1.32.6-beta.3`, `@percy/playwright@1.1.2-beta.0` (exact, per this
 repo's `save-exact` npmrc) and `@playwright/test@1.61.1`. While the Percy packages are in beta,
 `package.json` carries an npm `overrides` entry so a plain `npm install` resolves — the SDK's
 `@percy/cli >= 1.32.3` peer range doesn't accept prerelease versions (npm semver rule); the
