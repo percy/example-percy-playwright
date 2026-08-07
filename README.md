@@ -13,6 +13,8 @@ app, forked at commit
 | Example | What it shows | Run command |
 |---|---|---|
 | `./` (basic, at repo root) | Minimum viable integration: a `percySnapshot(page, name)` call per test. Start here. | `npm run test-web` |
+| `playwright.config.js` + [`./tests/dropin/`](./tests/dropin) | **Drop-in for `toHaveScreenshot()` (beta):** plain Playwright visual assertions routed through Percy — one config line, zero Percy imports in the spec. | `npm run test-dropin` |
+| `playwright.dropin.automate.config.js` + [`./tests/dropin-automate/`](./tests/dropin-automate) | The same drop-in on a **Percy on Automate** project — captures happen on a real BrowserStack browser through the session. | `npm run test-dropin-automate` |
 | [`./advanced/`](./advanced) | Full applicable Percy SDK feature surface: widths, percyCSS, regions, readiness, discovery, domTransformation, etc. See [`advanced/README.md`](./advanced/README.md) for the matrix-row coverage table. | `cd advanced && npm install && npx playwright install --with-deps chromium && npm run test:advanced` |
 
 ## Playwright Tutorial
@@ -22,7 +24,7 @@ The tutorial assumes you're already familiar with JavaScript and
 be able to follow along if you're not familiar with Playwright, but we won't
 spend time introducing Playwright concepts.
 
-The tutorial also assumes you have [Node 14+ with
+The tutorial also assumes you have [Node 18+ with
 npm](https://nodejs.org/en/download/) and
 [git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) installed.
 
@@ -137,6 +139,79 @@ From here, you can try making your own changes to the app and tests, if you like
 the tests  and you'll see any visual changes reflected in Percy.
 
 
+## Percy drop-in for `toHaveScreenshot()` (beta)
+
+If your suite already uses Playwright's built-in visual assertions, the drop-in routes them
+through Percy — **one config line, no test rewrites**. See
+[`playwright.config.js`](playwright.config.js) (the repo's default Playwright config) and
+[`tests/dropin/todomvc_tohavescreenshot.spec.js`](tests/dropin/todomvc_tohavescreenshot.spec.js):
+the spec imports nothing from Percy, only `@playwright/test`.
+
+```js
+// playwright.config.js
+require('@percy/playwright/dropin');
+```
+
+Run it with a Percy **Web** project token:
+
+```shell
+$ export PERCY_TOKEN=<your web project token>   # use the project's FULL ACCESS token for the first run
+$ npm run test-dropin
+```
+
+Your suite passes as usual — on a brand-new project the snapshots appear as "new" in Percy's
+review dashboard (there's nothing to compare against yet); approve the build once and later
+runs diff against it. The drop-in also suppresses Playwright's native missing-baseline failure,
+so a clean clone passes without any committed `*-snapshots` directories.
+
+**First-run baseline seeding:** if the repo has Playwright's committed baseline screenshots
+and the Percy project is empty, `percy exec` uploads them as an auto-approved build #1 first —
+so your very first run shows real diffs instead of "new" snapshots. To try it here:
+
+```shell
+$ npx playwright test tests/dropin/ --update-snapshots
+$ git add tests/dropin && git commit -m "playwright baselines"
+$ npm run test-dropin
+```
+
+> Note: baseline discovery reads Playwright's **default** config — which is why the drop-in
+> lives in this repo's `playwright.config.js` rather than a custom `--config` file. If your
+> project loads Playwright config from a non-default path, first-run seeding and
+> `playwright:setup-baseline` can't map your screenshots.
+
+The first run is best done with the project's **full access token** — the default write-only
+token can't read build status, so Percy can't hold the run until the baseline finishes
+(the CLI prints a warning explaining exactly this). To deliberately re-baseline an established
+project from committed screenshots: `npx percy playwright:setup-baseline`.
+
+### Drop-in on Percy on Automate
+
+The same drop-in works with a **Percy on Automate** (`auto_…`) token when the suite runs on
+BrowserStack — each `toHaveScreenshot()` is captured on the remote BrowserStack browser through
+your Automate session. See
+[`playwright.dropin.automate.config.js`](playwright.dropin.automate.config.js) and
+[`tests/dropin-automate/`](tests/dropin-automate) (the browser fixture connects via
+BrowserStack's Playwright endpoint; the spec still imports nothing from Percy):
+
+```shell
+$ export BROWSERSTACK_USERNAME=<your browserstack username>
+$ export BROWSERSTACK_ACCESS_KEY=<your browserstack access key>
+$ export PERCY_TOKEN=<your percy on automate project token>
+$ npm run test-dropin-automate
+```
+
+Baseline seeding doesn't apply to Automate projects (comparison identity comes from the live
+session) — the first run establishes the baseline; approve it in the dashboard, exactly like
+standard Percy on Automate onboarding. Running the automate config with a locally-launched
+browser fails each assertion with a pointer to run on BrowserStack.
+
+### Versions
+
+This example pins `@percy/cli@1.32.6`, `@percy/playwright@1.1.2` (exact, per this repo's
+`save-exact` npmrc) and `@playwright/test@1.61.1`. The drop-in requires `@percy/cli >= 1.32.6`
+and `@percy/playwright >= 1.1.2`; `@playwright/test` 1.60 or later (use 1.61 for Percy on
+Automate — 1.62 is not yet supported by BrowserStack's Playwright endpoint).
+
 ## Playwright with Automate Tutorial
 
 The tutorial assumes you're already familiar with JavaScript and
@@ -144,7 +219,7 @@ The tutorial assumes you're already familiar with JavaScript and
 be able to follow along if you're not familiar with Playwright, but we won't
 spend time introducing Playwright concepts.
 
-The tutorial also assumes you have [Node 14+ with
+The tutorial also assumes you have [Node 18+ with
 npm](https://nodejs.org/en/download/) and
 [git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) installed.
 
