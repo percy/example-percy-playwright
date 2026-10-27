@@ -1,0 +1,19 @@
+{
+  "name": "example-percy-playwright-1-63",
+  "private": true,
+  "description": "Percy + Playwright 1.63: component story snapshots and WebP toHaveScreenshot() names. See README.md.",
+  "type": "module",
+  "scripts": {
+    "test:stories": "percy exec -- playwright test --project=stories --reporter=dot",
+    "test:dropin": "percy exec -- playwright test --project=dropin --reporter=dot"
+  },
+  "devDependencies": {
+    "@percy/cli": "1.32.12",
+    "@percy/playwright": "1.1.2",
+    "@playwright/test": "1.63.0",
+    "@vitejs/plugin-react": "6.1.2",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "vite": "8.3.5"
+  }
+}

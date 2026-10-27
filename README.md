@@ -16,6 +16,7 @@ app, forked at commit
 | `playwright.config.js` + [`./tests/dropin/`](./tests/dropin) | **Drop-in for `toHaveScreenshot()` (beta):** plain Playwright visual assertions routed through Percy — one config line, zero Percy imports in the spec. | `npm run test-dropin` |
 | `playwright.dropin.automate.config.js` + [`./tests/dropin-automate/`](./tests/dropin-automate) | The same drop-in on a **Percy on Automate** project — captures happen on a real BrowserStack browser through the session. | `npm run test-dropin-automate` |
 | [`./advanced/`](./advanced) | Full applicable Percy SDK feature surface: widths, percyCSS, regions, readiness, discovery, domTransformation, etc. See [`advanced/README.md`](./advanced/README.md) for the matrix-row coverage table. | `cd advanced && npm install && npx playwright install --with-deps chromium && npm run test:advanced` |
+| [`./playwright-1-63/`](./playwright-1-63) | Playwright 1.63: `percySnapshot(component)` on components mounted with `mount`, and `toHaveScreenshot('hero.webp')` through the drop-in. Needs `@percy/playwright` 1.2.0-beta.0. See [`playwright-1-63/README.md`](./playwright-1-63/README.md). | `cd playwright-1-63 && npm install && npx playwright install chromium && npm run test:stories` |
 
 ## Playwright Tutorial
 
